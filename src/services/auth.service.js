@@ -18,6 +18,20 @@ class AuthService {
       });
   }
 
+  twitchLogin(code) {
+    return axios
+        .post(API_URL + '/twitch', {
+          code: code
+        })
+        .then(response => {
+          if (response.data.accessToken) {
+            localStorage.setItem('user', JSON.stringify(response.data));
+          }
+
+          return response.data;
+        });
+  }
+
   logout() {
     localStorage.removeItem('user');
   }

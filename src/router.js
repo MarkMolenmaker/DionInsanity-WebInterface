@@ -2,6 +2,7 @@ import { createWebHistory, createRouter } from "vue-router";
 import Home from "./views/HomeView.vue";
 import LoginView from "./views/LoginView.vue";
 import RegisterView from "./views/RegisterView.vue";
+import CallbackUrl from "./views/CallbackView.vue";
 // lazy-loaded
 const Profile = () => import("./views/./ProfileView")
 const AdminBoard = () => import("./components/boards/./AdminBoard")
@@ -25,6 +26,10 @@ const routes = [
   {
     path: "/register",
     component: RegisterView,
+  },
+  {
+    path: "/callback",
+    component: CallbackUrl,
   },
   {
     path: "/profile",

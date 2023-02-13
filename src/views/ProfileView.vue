@@ -2,8 +2,9 @@
   <div class="container">
     <header class="jumbotron">
       <h3>
-        <strong>{{currentUser.username}}</strong> Profile
+        <strong>{{currentUser.displayName}}</strong> Profile
       </h3>
+      <img :src="currentUser.profileImageUrl">
     </header>
     <p>
       <strong>Token:</strong>
@@ -12,6 +13,14 @@
     <p>
       <strong>Id:</strong>
       {{currentUser.id}}
+    </p>
+    <p>
+      <strong>Twitch Id:</strong>
+      {{currentUser.twitchId}}
+    </p>
+    <p>
+      <strong>Username:</strong>
+      {{currentUser.username}}
     </p>
     <p>
       <strong>Email:</strong>

@@ -34,6 +34,16 @@
           </div>
         </div>
       </Form>
+      <div class="form-group">
+        <button class="btn btn-primary btn-twitch btn-block" :disabled="loading" @click="handleTwitchLogin">
+            <span
+                v-show="loading"
+                class="spinner-border spinner-border-sm"
+            ></span>
+          <font-awesome-icon icon="fa-brands fa-twitch" />
+          <span>Login with Twitch</span>
+        </button>
+      </div>
     </div>
   </div>
 </template>
@@ -90,6 +100,11 @@ export default {
         }
       );
     },
+    handleTwitchLogin() {
+      this.loading = true;
+
+      window.location = process.env.VUE_APP_TWITCH_AUTH_URL;
+    },
   },
 };
 </script>
@@ -130,5 +145,25 @@ label {
 
 .error-feedback {
   color: red;
+}
+
+.btn-twitch {
+  background-color: #6441a5;
+  color: #fff;
+}
+
+.btn-twitch:hover {
+  background-color: #4b328d;
+  color: #fff;
+}
+
+.btn-twitch:focus {
+  background-color: #4b328d;
+  color: #fff;
+}
+
+.btn-twitch:active {
+  background-color: #4b328d;
+  color: #fff;
 }
 </style>

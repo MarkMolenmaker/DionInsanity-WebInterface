@@ -7,7 +7,10 @@ import {
   faSignInAlt,
   faSignOutAlt,
 } from "@fortawesome/free-solid-svg-icons";
+import {
+  faTwitch,
+} from "@fortawesome/free-brands-svg-icons";
 
-library.add(faHome, faUser, faUserPlus, faSignInAlt, faSignOutAlt);
+library.add(faHome, faUser, faUserPlus, faSignInAlt, faSignOutAlt, faTwitch);
 
 export { FontAwesomeIcon };
