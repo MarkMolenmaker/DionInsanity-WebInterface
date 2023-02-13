@@ -1,7 +1,6 @@
 import { createWebHistory, createRouter } from "vue-router";
 import Home from "./views/HomeView.vue";
 import LoginView from "./views/LoginView.vue";
-import RegisterView from "./views/RegisterView.vue";
 import CallbackUrl from "./views/CallbackView.vue";
 // lazy-loaded
 const Profile = () => import("./views/./ProfileView")
@@ -22,10 +21,6 @@ const routes = [
   {
     path: "/login",
     component: LoginView,
-  },
-  {
-    path: "/register",
-    component: RegisterView,
   },
   {
     path: "/callback",
