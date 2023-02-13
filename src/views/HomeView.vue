@@ -1,28 +1,33 @@
 <template>
   <div class="container">
     <header class="jumbotron">
-      <h3>{{ content }}</h3>
+      <h3>Main Bingocard</h3>
+      <div v-if="this.bingocard" class="BingoCard">
+        <div v-for="loot in this.bingocard.layout" v-bind:key="loot" class="BingoCardFrame">
+          <img src="../assets/medium_loot/mithril_helmet.png" alt="">
+        </div>
+      </div>
     </header>
   </div>
 </template>
 
 <script>
-import UserService from "../services/user.service";
+import BingoService from "../services/bingo.service";
 
 export default {
   name: "HomeView",
   data() {
     return {
-      content: "",
+      bingocard: null,
     };
   },
   mounted() {
-    UserService.getPublicContent().then(
-      (response) => {
-        this.content = response.data;
+    BingoService.getMainBingoCard().then(
+      (bingocard) => {
+        this.bingocard = bingocard;
       },
       (error) => {
-        this.content =
+        this.bingocard =
           (error.response &&
             error.response.data &&
             error.response.data.message) ||
@@ -33,3 +38,27 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.BingoCard {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(5, 1fr);
+  grid-gap: .2em;
+  width: 100%;
+  height: 100%;
+}
+.BingoCardFrame {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  border: 1px solid black;
+  width: 5em;
+  height: 5em;
+}
+.BingoCardFrame img {
+  max-width: 5em;
+  max-height: 5em;
+}
+</style>
