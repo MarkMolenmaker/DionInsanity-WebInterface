@@ -20,7 +20,9 @@ class BingoService {
             response => {
                 return response.data;
             }
-        );
+        ).catch(error => {
+            return error;
+        });
     }
 
     increaseItemAmount(bingoCard, item) {

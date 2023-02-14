@@ -13,22 +13,36 @@
       </div>
       <button @click="handleGenerateGeneralBingoCard">Create a new General Bingocard</button>
       <p>{{selected_items.length}}/25 Items Selected...</p>
+      <form @submit.prevent="handleSearchTwitchAccount">
+        <input type="text" v-model="searchField" placeholder="Search for a Twitch User">
+        <button>Search</button>
+      </form>
+      <form v-if="twitchAccount" @submit.prevent="handleRegisterAccount(twitchAccount.id)">
+        <img :src="twitchAccount.profileImageUrl" alt="">
+        <p>Display Name: {{twitchAccount.displayName}}</p>
+        <p>Id: {{twitchAccount.id}}</p>
+        <p>Login: {{twitchAccount.login}}</p>
+        <button>Register this Account</button>
+      </form>
+      <p>{{message}}</p>
     </header>
   </div>
 </template>
 
 <script>
-import UserService from "../../services/user.service";
 import BingoService from "../../services/bingo.service";
+import TwitchService from "@/services/twitch.service";
 
 export default {
   name: "AdminBoard",
   data() {
     return {
-      content: "",
       loading: true,
       items: [],
       selected_items: [],
+      searchField: '',
+      twitchAccount: null,
+      message: ""
     };
   },
   methods: {
@@ -46,8 +60,7 @@ export default {
         return;
       }
       BingoService.generateGeneralBingoCard(this.selected_items).then(
-        (response) => {
-          this.content = response.data;
+        () => {
           this.$router.push("/");
         },
         (error) => {
@@ -60,26 +73,32 @@ export default {
         }
       );
     },
+    handleSearchTwitchAccount() {
+      TwitchService.searchTwitchAccount(this.searchField).then(
+        (response) => {
+          this.twitchAccount = response;
+          this.message = "";
+        },
+        (error) => {
+          this.twitchAccount = null;
+          this.message =
+            (error.response &&
+              error.response.data &&
+              error.response.data.message) ||
+            error.message ||
+            error.toString();
+        }
+      );
+    },
+    handleRegisterAccount(id) {
+      console.log("Registering account with id: " + id);
+    }
   },
   mounted() {
     this.loading = true;
-    UserService.getAdminBoard().then(
-      (response) => {
-        this.content = response.data;
-      },
-      (error) => {
-        this.content =
-          (error.response &&
-            error.response.data &&
-            error.response.data.message) ||
-          error.message ||
-          error.toString();
-      }
-    );
     BingoService.getAllItems().then(
       (response) => {
         this.items = response;
-        this.loading = false;
       },
       (error) => {
         this.content =
@@ -90,6 +109,7 @@ export default {
           error.toString();
       }
     );
+    this.loading = false;
   },
 };
 </script>
