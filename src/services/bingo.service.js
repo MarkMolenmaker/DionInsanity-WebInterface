@@ -60,6 +60,33 @@ class BingoService {
             }
         );
     }
+
+    addBingoCard(id) {
+        return axios.post(API_URL + '/' + id + '/add', {},
+            {headers: authHeader()}).then(
+            response => {
+                return response.data;
+            }
+        );
+    }
+
+    deleteBingoCard(bingoCardId) {
+        return axios.delete(API_URL + '/' + bingoCardId + '/delete', {headers: authHeader()}).then(
+            response => {
+                return response.data;
+            })
+            .catch(error => {
+                return error;
+            });
+    }
+
+    getAllBingoCards() {
+        return axios.get(API_URL + '/', {headers: authHeader()}).then(
+            response => {
+                return response.data;
+            }
+        );
+    }
 }
 
 export default new BingoService();

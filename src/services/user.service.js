@@ -1,23 +1,23 @@
 import axios from 'axios';
 import authHeader from './auth-header';
 
-const API_URL = process.env.VUE_APP_API_URL + '/test';
+const API_URL = process.env.VUE_APP_API_URL + '/user';
 
 class UserService {
-  getPublicContent() {
-    return axios.get(API_URL + '/all');
+  getAllUsers() {
+    return axios.get(API_URL + '/', { headers: authHeader() }).then(
+        response => {
+            return response.data;
+        }
+    );
   }
 
-  getUserBoard() {
-    return axios.get(API_URL + '/user', { headers: authHeader() });
-  }
-
-  getModeratorBoard() {
-    return axios.get(API_URL + '/mod', { headers: authHeader() });
-  }
-
-  getAdminBoard() {
-    return axios.get(API_URL + '/admin', { headers: authHeader() });
+  registerTwitchAccount(account) {
+    return axios.post(API_URL + '/', account, { headers: authHeader() }).then(
+        response => {
+            return response.data;
+        }
+    );
   }
 }
 

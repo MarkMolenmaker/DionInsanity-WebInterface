@@ -1,6 +1,6 @@
 <template>
   <div class="container d-flex justify-content-center align-items-center">
-    <BingoCard v-if="!loading" :bingoCard="bingoCard" @bingo-card-updated="(card) => bingoCard = card"/>
+    <BingoCard v-if="!loading" :bingoCard="bingoCard" @bingo-card-updated="(card) => bingoCard = card" size="8" allow-item-updates />
   </div>
 </template>
 

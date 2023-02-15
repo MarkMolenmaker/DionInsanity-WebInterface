@@ -1,6 +1,7 @@
 <template>
   <div class="bingoCard" v-if="!loading">
     <div class="bingoCard-cell"
+         :style="sizeStyle"
          v-for="item_name in bingoCard.layout" :key="item_name"
          :class="{ 'checked': bingoCard.loot[item_name] }"
          @click.left="handleIncreaseItemAmount(item_name)"
@@ -18,7 +19,7 @@
     </div>
   </div>
   <div class="bingoCard" v-else>
-    <div class="bingoCard-cell"
+    <div class="bingoCard-cell" :style="sizeStyle"
          v-for="index in 25" :key="index" >
       <div class="bingoCard-cell-content">
         <img class="bingoCard-cell-content-img"
@@ -38,6 +39,19 @@ export default {
     bingoCard: {
       type: Object,
       required: true,
+    },
+    size: {
+      type: Number,
+      default: 8,
+    },
+    allowItemUpdates: {
+      type: Boolean,
+      default: false,
+    }
+  },
+  computed: {
+    sizeStyle () {
+      return `width: ${this.size}em; height: ${this.size}em;`;
     }
   },
   data() {
@@ -48,21 +62,27 @@ export default {
   emits: ['bingoCardUpdated'],
   methods: {
     handleIncreaseItemAmount(item) {
+      if (!this.allowItemUpdates) return;
       this.loading = true;
       BingoService.increaseItemAmount(this.bingoCard, item).then(
           (bingoCard) => {
             this.$emit('bingoCardUpdated', bingoCard);
             this.loading = false;
-          });
+          }).catch(() => {
+        this.loading = false;
+      });
     },
     handleDecreaseItemAmount(item) {
+      if (!this.allowItemUpdates) return;
       this.loading = true;
       BingoService.decreaseItemAmount(this.bingoCard, item).then(
           (bingoCard) => {
             this.$emit('bingoCardUpdated', bingoCard);
             this.loading = false;
-          });
-    },
+          }).catch(() => {
+        this.loading = false;
+      });
+    }
   }
 }
 </script>
@@ -85,8 +105,6 @@ export default {
   position: relative;
   justify-content: center;
   align-items: center;
-  width: 8em;
-  height: 8em;
   border: .2em black solid;
   cursor: pointer;
 }
