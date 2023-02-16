@@ -8,7 +8,7 @@
              :class="{ 'checked': selected_items.includes(item.name) }"
              @click="handleSelectItemToggle(item.name)">
           <div class="item-container-content">
-            <img class="item-img" :src="require(`@/assets/cluebingo/${item.name}.png`)" :alt="item.name">
+            <img class="item-img" :src="require(`@/assets/cluebingo/low_quality/${item.name}.png`)" :alt="item.name">
           </div>
         </div>
       </div>

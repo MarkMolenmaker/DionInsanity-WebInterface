@@ -6,7 +6,8 @@ import CallbackUrl from "./views/CallbackView.vue";
 const Profile = () => import("./views/./ProfileView")
 const AdminBoard = () => import("./components/boards/./AdminBoard")
 const ModeratorBoard = () => import("./components/boards/./ModeratorBoard")
-const UserBoard = () => import("./components/boards/./UserBoard")
+const BoughtBoard = () => import("./components/boards/./BoughtBoard")
+const GeneralBoard = () => import("./components/boards/./GeneralBoard")
 
 const routes = [
   {
@@ -45,10 +46,16 @@ const routes = [
     component: ModeratorBoard,
   },
   {
-    path: "/user",
-    name: "user",
+    path: "/bought",
+    name: "bought",
     // lazy-loaded
-    component: UserBoard,
+    component: BoughtBoard,
+  },
+  {
+    path: "/general",
+    name: "general",
+    // lazy-loaded
+    component: GeneralBoard,
   },
 ];
 

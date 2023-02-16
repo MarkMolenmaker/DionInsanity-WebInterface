@@ -25,11 +25,10 @@ class BingoService {
         });
     }
 
-    increaseItemAmount(bingoCard, item) {
+    increaseItemAmount(owner, item) {
         return axios.put(API_URL + '/loot', {
-            bingoCardId: bingoCard.id,
             item: item,
-            owner: bingoCard.owner,
+            owner: owner,
             action: 'increase',
             amount: 1
         }, {headers: authHeader()}).then(
@@ -39,11 +38,10 @@ class BingoService {
         );
     }
 
-    decreaseItemAmount(bingoCard, item) {
+    decreaseItemAmount(owner, item) {
         return axios.put(API_URL + '/loot', {
-            bingoCardId: bingoCard.id,
             item: item,
-            owner: bingoCard.owner,
+            owner: owner,
             action: 'decrease',
             amount: 1
         }, {headers: authHeader()}).then(
@@ -82,6 +80,22 @@ class BingoService {
 
     getAllBingoCards() {
         return axios.get(API_URL + '/', {headers: authHeader()}).then(
+            response => {
+                return response.data;
+            }
+        );
+    }
+
+    getAllLootCollections() {
+        return axios.get(API_URL + '/loot', {headers: authHeader()}).then(
+            response => {
+                return response.data;
+            }
+        );
+    }
+
+    getAllGeneralBingoCardVariations() {
+        return axios.get(API_URL + '/general/all', {headers: authHeader()}).then(
             response => {
                 return response.data;
             }

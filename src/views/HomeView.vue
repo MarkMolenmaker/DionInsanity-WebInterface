@@ -1,6 +1,7 @@
 <template>
-  <div class="container d-flex justify-content-center align-items-center">
-    <BingoCard v-if="!loading" :bingoCard="bingoCard" @bingo-card-updated="(card) => bingoCard = card" size="8" allow-item-updates />
+  <div class="container d-flex justify-content-center align-items-center mt-5">
+    <BingoCard v-if="!loading" :bingoCard="bingoCard" @bingo-card-updated="() => {this.$router.go()}"
+               :size="8" quality="high_quality" allow-item-updates />
   </div>
 </template>
 
