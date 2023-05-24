@@ -9,6 +9,7 @@
              @click="handleSelectItemToggle(item.name)">
           <div class="item-container-content">
             <img class="item-img" :src="require(`@/assets/cluebingo/low_quality/${item.name}.png`)" :alt="item.name">
+<!--            <img class="item-img" :src="require(`@/assets/cluebingo/low_quality/ADAMANT_CANE.png`)" :alt="item.name">-->
           </div>
         </div>
       </div>
@@ -32,6 +33,7 @@
             </div>
             <div class="user-line-details">
               <button @click="handleAddBingoCard(user)">Add Bingo Card</button>
+              <button v-if="adminEnabled" @click="handleDeleteUser(user)">Remove User</button>
             </div>
           </li>
         </ul>
@@ -41,6 +43,10 @@
         <input type="text" v-model="searchField" placeholder="Search for a Twitch User">
         <button>Search</button>
       </form>
+      <label for="check">
+        <input type="checkbox" name="check" v-model="adminEnabled">
+        <span> Enable Admin Actions</span>
+      </label>
       <form v-if="twitchAccount" @submit.prevent="handleRegisterAccount(twitchAccount.id)">
         <img :src="twitchAccount.profileImageUrl" alt="">
         <p>Display Name: {{ twitchAccount.displayName }}</p>
@@ -68,7 +74,8 @@ export default {
       searchField: '',
       twitchAccount: null,
       users: [],
-      message: ""
+      message: "",
+      adminEnabled: false
     };
   },
   methods: {
@@ -151,6 +158,21 @@ export default {
     },
     handleDeleteBingoCard(bingoCardId) {
       BingoService.deleteBingoCard(bingoCardId).then(
+          () => {
+            this.$router.go();
+          },
+          (error) => {
+            this.message =
+                (error.response &&
+                    error.response.data &&
+                    error.response.data.message) ||
+                error.message ||
+                error.toString();
+          }
+      );
+    },
+    handleDeleteUser(user) {
+      UserService.deleteUser(user.id).then(
           () => {
             this.$router.go();
           },

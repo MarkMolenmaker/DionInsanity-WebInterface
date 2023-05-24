@@ -11,7 +11,7 @@
                @click.left="handleIncreaseItemAmount(owner, item)"
                @click.right.prevent="handleDecreaseItemAmount(owner, item)">
             <div class="item-container-content">
-              <img class="item-img" :src="require(`@/assets/cluebingo/low_quality/${item}.png`)" :alt="item">
+              <img class="item-img" :src="require(`@/assets/cluebingo/high_quality/${item}.png`)" :alt="item">
               <span class="item-amount"
                     v-if="value > 0" >{{value}}</span>
             </div>

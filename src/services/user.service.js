@@ -19,6 +19,14 @@ class UserService {
         }
     );
   }
+
+  deleteUser(id) {
+    return axios.delete(API_URL + '/' + id, { headers: authHeader() }).then(
+        response => {
+            return response.data;
+        }
+    );
+  }
 }
 
 export default new UserService();
